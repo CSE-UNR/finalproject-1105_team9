@@ -1,0 +1,39 @@
+***Functions***
+
+int main()
+	Data:Variables for load, display, crop, dim, brighten, save, and exit
+	Functionality: Contains the menu and ability to change modes. Asks user to save function and promts for file name to save image if eddited.
+	
+int mainMenu()
+	Input: none
+	Output: int userInputPointer
+	Functionality: Promts user options for loading a new image, display current image, edit current image, or exit the program. 
+
+int editMenu()
+	Input: none
+	Output: int* editMenuChoice
+	Functionality: Prompts user for edit options: crop, dim, brighten, rotate 90*.
+	
+void displayImage()
+	Input: char imageArray[][], int rowsSize, int collumsSize
+	Output: none
+	Functionality: Nested for loop to display image.
+	
+char dimImage()
+	Input Parameter: int rows, int columns, int field 2D array, char dim
+	Output: void
+	Functionality: Dims the loaded image
+	
+char brightenImage()
+	Input Parameter: int rows, int columns, int field 2D array, char dim
+	Output: void
+	Functionality: Brightens the loaded image
+	
+cropImage()
+	Input Parameter: int rows, int columns, int field 2D array, int rows location, int columns location
+	Returned Output: void
+	Functionality: Functionality: Display the users image dimensions, promt for start and end points in the x and y (so 4 values).  Use nested for loop to create new image by started at the top left of new cut (x1 and y2), saving that as character  [0][0] in new imageArray, and repeating until hitting the x limit in the inner loop, and y limit in the outer loop reaching the bottom right coordinate. 
+	
+
+	
+

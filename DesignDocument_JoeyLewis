@@ -1,0 +1,43 @@
+Functions:
+Main - 
+Data: 2-D array for image, variables for user inputs
+Functionality: 	In a loop, display and select option from menu, load new image, display current image, edit current image, or exit the program. If edit image, display edit menu and select option: crop, dim, brighten, (maybe rotate  90*). Display option to save changes to a new file and promt for file name. Return to first menu. 
+
+mainMenu  - 
+Input: int menuChoice
+Output: user menu choice.
+Functionality: Display options to user: load a new image, display current image, edit current image, or exit the program. Read user input.
+Note: put this function inside for loop with the exit condition being the loop condition.
+
+saveImage  - 
+Input: FILE* pointer, char imageArray, int imageSizeArray
+Output: none
+Functionality:  Prompt user to save their edited image; if yes, prompt for save file name. Open file and use nested for loop to print image into the file, then close file.
+
+editMenu  - 
+Input: int menuChoice
+Output: user menu choice.
+Functionality: Display options to user: crop, dim, brighten. Read user input.
+
+cropImage  - 
+Input:	char imageArray, int imageSizeArray
+Output: new image
+Functionality: Display the users image dimensions, promt for start and end points in the x and y (so 4 values).  Use nested for loop to create new image by started at the top left of new cut (x1 and y2), saving that as character  [0][0] in new imageArray, and repeating until hitting the x limit in the inner loop, and y limit in the outer loop reaching the bottom right coordinate. 
+
+colorImage  - 
+Input: char imageArray, int imageSizeArray, 
+Output: new image
+Functionality: If statement deciding if the image will be dimmed or brightened. Nested for loop with inner switch statement checking each image character and changing it based on dim or brighten. Ex. if imageArray[x][y] is == to ‘.’ , then imageArray[x][y] = ‘o’ for brightening.
+	
+displayImage  - 
+Input: char imageArray, int imageArraySize
+Output: none
+Functionality: nested for loop displaying the image to the terminal with the image size as limits.
+
+loadImage  - 
+Input: FILE* pointer, char imageArrayPointer, int imageSizeArrayPointer
+Output: none
+Functionality: Promt user for file name, open file and read image into imageArrayPointer and close file.
+
+
+

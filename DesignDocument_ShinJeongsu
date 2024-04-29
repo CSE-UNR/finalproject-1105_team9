@@ -2,31 +2,38 @@ Functions:
 main()
 Data: Variables for load, display, crop, dim, brighten, save, and exit
 Functionality: Contains the menu and ability to change modes.
+
 loadImage()
 Input Parameter: File pointer, int rows, int columns, int field 2D array
 Returned Output: None
 Functionality: Loads an image from a file
+
 displayImage()
 Input Parameter: int rows, int columns, int field 2D array
 Returned Output: None
 Functionality: display image on screen
+
 cropImage()
 Input Parameter: int rows, int columns, int field 2D array, int rows location, int columns location
 Returned Output: void
 Functionality: Crops the loaded image
+
 dimImage()
 Input Parameter: int rows, int columns, int field 2D array, char dim
 Returned Output: void
 Functionality: Dims the loaded image
+
 brightenImage()
 Input Parameter: int rows, int columns, int field 2D array, char brighten
 Returned Output: void
 Functionality: Brightens the loaded image
+
 saveImage()
 Input Parameter: File pointer
 Returned Output: File pointer
 Functionality: Saves the image a new folder or the existing folder. Unless requested, remove the
 old image and save the new image.
+
 exitImage()
 Input Parameter: int
 Returned Output: None
