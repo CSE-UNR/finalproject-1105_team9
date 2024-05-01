@@ -2,6 +2,9 @@
 // Date: 5/7/24
 // Purpose: 
 
+#include <stdio.h>
+#define STRING_CAP 100
+
 int mainMenu();
 int editMenu();
 void displayImage(int row, int col, char imageArray[][col]);
@@ -12,23 +15,31 @@ int main(){
 	do {
 		mainMenuChoice = mainMenu();
 		if(mainMenuChoice == 1){
-			displayImage();
+			
 		}
 		else if(mainMenuChoice == 2){
+			displayImage(rows, collums, imageArray);
+			printf("Display image\n");
 		}
 		else if(mainMenuChoice == 3){
-			do{
+			do {
 				editMenuChoice = editMenu();
+				
 				if(editMenuChoice == 1){
+					// crop image
 				}
 				else if(editMenuChoice == 2){
+					// dim image
 				}
 				else if(editMenuChoice == 3){
+					// brighten image
 				}
-				else{
-					printf("Wrong option! Please try again.\n");
+				else if(editMenuChoice == 0){
 				}
-			} while(editMenuChoice != 0);
+				else {
+					printf("Invalid option, please try again.\n");
+				}
+			} while (editMenuChoice != 1 && editMenuChoice != 2 && editMenuChoice != 3 && editMenuChoice != 0);
 		}
 		else{
 			printf("Wrong option! Please try again.\n");
@@ -41,13 +52,13 @@ int main(){
 
 int mainMenu(){
 	int userInput;	
-	printf("**ERINSTAGRAM**\n");
-	printf("1: Load Image\n");
-	printf("2: Display Image\n");
-	printf("3: Edit Image\n");
-	printf("0: Exit\n");
-	printf("\nChoose from one of the options above: ");
-	scanf("%d", &userInput);
+		printf("**ERINSTAGRAM**\n");
+		printf("1: Load Image\n");
+		printf("2: Display Image\n");
+		printf("3: Edit Image\n");
+		printf("0: Exit\n");
+		printf("\nChoose from one of the options above: ");
+		scanf("%d", &userInput);
 	return userInput;
 }
 
@@ -61,9 +72,10 @@ int editMenu(){
 	printf("0: Return to main menu\n");
 	printf("\nChoose from one of the options above:");
 	scanf(" %d", &editMenuChoice);
+	return editMenuChoice;
 }
 
-void displayImage(int row, int col, char imageArray[][col]){
+void displayImage(int row, int col, char imageArray[STRING_CAP][STRING_CAP]){
 	
 	for(int i=0; i<row; i++){
 		for(int j=0; j<col; j++){
