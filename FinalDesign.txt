@@ -6,7 +6,7 @@ int main()
 	
 int mainMenu()
 	Input: none
-	Output: int userInputPointer
+	Output: int userInput
 	Functionality: Promts user options for loading a new image, display current image, edit current image, or exit the program. 
 
 int editMenu()
