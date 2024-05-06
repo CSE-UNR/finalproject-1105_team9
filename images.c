@@ -13,6 +13,8 @@ void displayImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 int editMenu();
 void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
+//void cropImage()
+void saveImage(char fileName[], int image[MAX_ROWS][MAX_COLUMNS], int *rows, int *cols);
 
 int main(){
 	int mainMenuChoice, editMenuChoice;
@@ -212,6 +214,31 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}
 		printf("\n");
 	}
+	char fileName[STRING_CAP], saveFileChoice;
+	printf("Would you like to save the file? (y/n) \n");
+	scanf(" %c", &saveFileChoice);
+	if (saveFileChoice == 'y'){
+		printf("What do you want to name the image file? (include the extension)\n");
+		scanf("%s", &fileName);
+		
+		FILE* wptr;
+		wptr = fopen(fileName, "w");
+		if (wptr == NULL){
+			printf("Can't open file\n");
+			return ;
+		}
+		for (int i = 0; i < rows; i++){
+			for (int k = 0; k < cols; k++){
+				fprintf(wptr, "%d", image[i][k]); 
+			}
+			fprintf(wptr, "\n"); 
+		}
+		
+		
+		fclose(wptr);
+	}
+	
 }
+
 
 
