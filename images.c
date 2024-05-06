@@ -1,4 +1,4 @@
-// Authors: Joey Lewis, Jeongsu Shin
+// Authors: Joey Lewis & Jeongsu Shin
 // Date: 5/7/24
 // Purpose: Final Project
 
@@ -44,6 +44,7 @@ int main(){
 					//a new function to save file
 					//printf("Would you like to save the file? (y/n) \n");
 					//scanf(" %c", &saveFileChoice);
+					//printf("What do you want to name the image file? (include the extension)"\n);
 				}
 				else if(editMenuChoice == 2){
 					dimImage(rows, cols, image);
@@ -71,13 +72,15 @@ int main(){
 
 int mainMenu(){
 	int userInput;	
-		printf("**ERINSTAGRAM**\n");
-		printf("1: Load Image\n");
-		printf("2: Display Image\n");
-		printf("3: Edit Image\n");
-		printf("0: Exit\n");
-		printf("\nChoose from one of the options above: ");
-		scanf("%d", &userInput);
+	
+	printf("**ERINSTAGRAM**\n");
+	printf("1: Load Image\n");
+	printf("2: Display Image\n");
+	printf("3: Edit Image\n");
+	printf("0: Exit\n");
+	printf("\nChoose from one of the options above: ");
+	scanf("%d", &userInput);
+		
 	return userInput;
 }
 
