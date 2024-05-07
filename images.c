@@ -205,11 +205,11 @@ void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 	int leftCol, rightCol, topRow, bottomRow;
 	printf("Which column do you want to be the new left side? ");
 	scanf("%d", &leftCol);
-	printf("Which column do you want to be the new right side? ");
+	printf("\nWhich column do you want to be the new right side? ");
 	scanf("%d", &rightCol);
-	printf("Which row do you want to be the new top? ");
+	printf("\nWhich row do you want to be the new top? ");
 	scanf("%d", &topRow);
-	printf("Which row do you want to be the new bottom? ");
+	printf("\nWhich row do you want to be the new bottom? ");
 	scanf("%d", &bottomRow);
 	
 	for(int i = topRow - 1; i <= bottomRow; i++){
@@ -239,11 +239,11 @@ void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 	}
 	
 	char fileName[STRING_CAP], saveFileChoice;
-	printf("Would you like to save the file? (y/n) \n");
+	printf("Would you like to save the file? (y/n) ");
 	scanf(" %c", &saveFileChoice);
 	
 	if (saveFileChoice == 'y'){
-		printf("What do you want to name the image file? (include the extension)\n");
+		printf("What do you want to name the image file? (include the extension) ");
 		scanf(" %s", fileName);
 		
 		FILE* wptr;
@@ -256,16 +256,13 @@ void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		
 		for (int i = topRow - 1; i <= bottomRow; i++){
 			for (int k = leftCol - 1; k <= rightCol; k++){
-				if (image[i][k] < 4){
-					fprintf(wptr, "%d", image[i][k] + 1); 
-				}
-				else {
-					fprintf(wptr, "%d", image[i][k]);
-				}
+				fprintf(wptr, "%d", image[i][k]);
 			}
 			fprintf(wptr, "\n"); 
 		}				
 		fclose(wptr);
+		
+		printf("\nImage Successfully Saved!\n\n");
 	}	
 }
 
@@ -296,10 +293,10 @@ void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		printf("\n");
 	}
 	char fileName[STRING_CAP], saveFileChoice;
-	printf("Would you like to save the file? (y/n) \n");
+	printf("Would you like to save the file? (y/n) ");
 	scanf(" %c", &saveFileChoice);
 	if (saveFileChoice == 'y'){
-		printf("What do you want to name the image file? (include the extension)\n");
+		printf("What do you want to name the image file? (include the extension) ");
 		scanf(" %s", fileName);
 		
 		FILE* wptr;
@@ -322,6 +319,8 @@ void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 			fprintf(wptr, "\n"); 
 		}		
 		fclose(wptr);
+		
+		printf("\nImage Successfully Saved!\n\n");
 	}
 }
 
@@ -352,10 +351,10 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		printf("\n");
 	}
 	char fileName[STRING_CAP], saveFileChoice;
-	printf("Would you like to save the file? (y/n) \n");
+	printf("Would you like to save the file? (y/n) ");
 	scanf(" %c", &saveFileChoice);
 	if (saveFileChoice == 'y'){
-		printf("What do you want to name the image file? (include the extension)\n");
+		printf("What do you want to name the image file? (include the extension) ");
 		scanf(" %s", fileName);
 		
 		FILE* wptr;
@@ -378,6 +377,8 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 			fprintf(wptr, "\n"); 
 		}				
 		fclose(wptr);
+		
+		printf("\nImage Successfully Saved!\n\n");
 	}	
 }
 
