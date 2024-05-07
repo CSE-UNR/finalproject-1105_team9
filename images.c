@@ -13,7 +13,7 @@ void displayImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 int editMenu();
 void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
-//void cropImage()
+void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 void saveImage(char fileName[], int image[MAX_ROWS][MAX_COLUMNS], int *rows, int *cols);
 
 int main(){
@@ -41,20 +41,13 @@ int main(){
 			do {
 				editMenuChoice = editMenu();
 				if(editMenuChoice == 1){
-					//crop image
-					
-					//a new function to save file
-					//printf("Would you like to save the file? (y/n) \n");
-					//scanf(" %c", &saveFileChoice);
-					//printf("What do you want to name the image file? (include the extension)"\n);
+					cropImage(rows, cols, image);										
 				}
 				else if(editMenuChoice == 2){
 					dimImage(rows, cols, image);
-					//a new function to save file
 				}
 				else if(editMenuChoice == 3){
 					brightenImage(rows, cols, image);
-					//a new function to save file
 				}
 				else if(editMenuChoice == 0){
 				}
@@ -63,6 +56,7 @@ int main(){
 				}
 			} while (editMenuChoice != 1 && editMenuChoice != 2 && editMenuChoice != 3 && editMenuChoice != 0);
 		}
+		else if (mainMenuChoice == 0){} //to not print wrong option for an exit
 		else{
 			printf("Wrong option! Please try again.\n");
 		}
@@ -186,6 +180,32 @@ void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}
 		printf("\n");
 	}
+	char fileName[STRING_CAP], saveFileChoice;
+	printf("Would you like to save the file? (y/n) \n");
+	scanf(" %c", &saveFileChoice);
+	if (saveFileChoice == 'y'){
+		printf("What do you want to name the image file? (include the extension)\n");
+		scanf("%s", fileName);
+		
+		FILE* wptr;
+		wptr = fopen(fileName, "w");
+		if (wptr == NULL){
+			printf("Can't open file\n");
+			return ;
+		}
+		for (int i = 0; i < rows; i++){
+			for (int k = 0; k < cols; k++){
+				if (image[i][k] > 0){
+					fprintf(wptr, "%d", image[i][k] - 1); 
+				}
+				else {
+					fprintf(wptr, "%d", image[i][k]);
+				}
+			}
+			fprintf(wptr, "\n"); 
+		}		
+		fclose(wptr);
+	}
 }
 
 void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
@@ -219,7 +239,7 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 	scanf(" %c", &saveFileChoice);
 	if (saveFileChoice == 'y'){
 		printf("What do you want to name the image file? (include the extension)\n");
-		scanf("%s", &fileName);
+		scanf("%s", fileName);
 		
 		FILE* wptr;
 		wptr = fopen(fileName, "w");
@@ -229,16 +249,120 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}
 		for (int i = 0; i < rows; i++){
 			for (int k = 0; k < cols; k++){
-				fprintf(wptr, "%d", image[i][k]); 
+				if (image[i][k] < 4){
+					fprintf(wptr, "%d", image[i][k] + 1); 
+				}
+				else {
+					fprintf(wptr, "%d", image[i][k]);
+				}
 			}
 			fprintf(wptr, "\n"); 
-		}
-		
-		
+		}				
 		fclose(wptr);
-	}
-	
+	}	
 }
-
+void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
+	printf("\n");
+	printf(" 1");
+	for(int i = 1; i < cols +1; i++){
+		printf(" ");
+	}
+	printf("%d\n", cols);
+	for(int i=0; i<rows; i++){
+		if (i == 0){
+			printf("1 ");
+		}
+		else {
+			printf("  ");
+		}
+		for(int j=0; j<cols; j++){
+			switch(image[i][j]){
+				case 0 :
+					printf(" ");
+					break;
+				case 1 :
+					printf(".");
+					break;
+				case 2 :
+					printf("o");
+					break;
+				case 3 :
+					printf("O");
+					break;
+				case 4 :
+					printf("0");
+					break;
+				default:
+					printf(" ");
+					break;
+			}
+		}
+		printf("\n");
+	}
+	printf("%d", rows);
+	printf("\n");
+	printf("The image you want to crop is %d x %d\n", rows, cols);
+	printf("The row and column values start in the upper lefthand corner.\n\n");
+	int leftCol, rightCol, topRow, bottomRow;
+	printf("Which column do you want to be the new left side? ");
+	scanf("%d", &leftCol);
+	printf("Which column do you want to be the new right side? ");
+	scanf("%d", &rightCol);
+	printf("Which row do you want to be the new top? ");
+	scanf("%d", &topRow);
+	printf("Which row do you want to be the new bottom? ");
+	scanf("%d", &bottomRow);
+	
+	for(int i = topRow - 1; i <= bottomRow; i++){
+		for(int j = leftCol - 1; j <= rightCol; j++){
+			switch(image[i][j]){
+			case 0 :
+				printf(" ");
+				break;
+			case 1 :
+				printf(" ");
+				break;
+			case 2 :
+				printf(".");
+				break;
+			case 3 :
+				printf("o");
+				break;
+			case 4 :
+				printf("O");
+				break;
+			default:
+				break;
+			}
+		}
+		printf("\n");
+	}
+	char fileName[STRING_CAP], saveFileChoice;
+	printf("Would you like to save the file? (y/n) \n");
+	scanf(" %c", &saveFileChoice);
+	if (saveFileChoice == 'y'){
+		printf("What do you want to name the image file? (include the extension)\n");
+		scanf("%s", fileName);
+		
+		FILE* wptr;
+		wptr = fopen(fileName, "w");
+		if (wptr == NULL){
+			printf("Can't open file\n");
+			return ;
+		}
+		for (int i = topRow - 1; i <= bottomRow; i++){
+			for (int k = leftCol - 1; k <= rightCol; k++){
+				if (image[i][k] < 4){
+					fprintf(wptr, "%d", image[i][k] + 1); 
+				}
+				else {
+					fprintf(wptr, "%d", image[i][k]);
+				}
+			}
+			fprintf(wptr, "\n"); 
+		}				
+		fclose(wptr);
+	}	
+}
 
 
