@@ -8,12 +8,13 @@
 #define MAX_COLUMNS 100
 
 int mainMenu();
+int editMenu();
 void loadImage(char fileName[], int image[MAX_ROWS][MAX_COLUMNS], int *rows, int *cols);
 void displayImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
-int editMenu();
 void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
+void rotateImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]);
 
 int main(){
 	int mainMenuChoice, editMenuChoice;
@@ -49,13 +50,16 @@ int main(){
 				else if(editMenuChoice == 3){
 					brightenImage(rows, cols, image);
 				}
+				else if(editMenuChoice == 4){
+					rotateImage(rows, cols, image);
+				}
 				else if(editMenuChoice == 0){
 					printf("\n");
 				}
 				else {
 					printf("Invalid option, please try again.\n");
 				}
-			} while (editMenuChoice != 1 && editMenuChoice != 2 && editMenuChoice != 3 && editMenuChoice != 0);
+			} while (editMenuChoice != 1 && editMenuChoice != 2 && editMenuChoice != 3  && editMenuChoice != 4 && editMenuChoice != 0);
 		}
 		else if (mainMenuChoice == 0){
 			printf("\nGoodbye!\n\n");
@@ -81,6 +85,21 @@ int mainMenu(){
 	scanf("%d", &userInput);
 		
 	return userInput;
+}
+
+int editMenu(){
+	int editMenuChoice;
+
+	printf("**EDITING**\n");
+	printf("1: Crop image\n");
+	printf("2: Dim image\n");
+	printf("3: Brighten image\n");
+	printf("4: Rotate Image\n");
+	printf("0: Return to main menu\n");
+	printf("\nChoose from one of the options above:");
+	scanf(" %d", &editMenuChoice);
+	
+	return editMenuChoice;
 }
 
 void loadImage(char fileName[], int image[MAX_ROWS][MAX_COLUMNS], int *rows, int *cols){
@@ -143,34 +162,20 @@ void displayImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 	printf("\n");
 }
 
-int editMenu(){
-	int editMenuChoice;
-
-	printf("**EDITING**\n");
-	printf("1: Crop image\n");
-	printf("2: Dim image\n");
-	printf("3: Brighten image\n");
-	printf("0: Return to main menu\n");
-	printf("\nChoose from one of the options above:");
-	scanf(" %d", &editMenuChoice);
-	
-	return editMenuChoice;
-}
-
 void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 	printf("\n");
 	printf(" 1");
-	for(int i = 1; i < cols +1; i++){
+	for(int i = 1; i < cols; i++){
 		printf(" ");
 	}
 	printf("%d\n", cols);
-	
+
 	for(int i=0; i<rows; i++){
 		if (i == 0){
-			printf("1 ");
+			printf("1");
 		}
 		else {
-			printf("  ");
+			printf(" ");
 		}
 		for(int j=0; j<cols; j++){
 			switch(image[i][j]){
@@ -196,24 +201,23 @@ void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}
 		printf("\n");
 	}
+	printf("%d\n\n", rows);
 	
-	printf("%d", rows);
-	printf("\n");
-	printf("The image you want to crop is %d x %d\n", rows, cols);
+	printf("The image you want to crop is %d x %d.\n", rows, cols);
 	printf("The row and column values start in the upper lefthand corner.\n\n");
 	
 	int leftCol, rightCol, topRow, bottomRow;
 	printf("Which column do you want to be the new left side? ");
 	scanf("%d", &leftCol);
-	printf("\nWhich column do you want to be the new right side? ");
+	printf("Which column do you want to be the new right side? ");
 	scanf("%d", &rightCol);
-	printf("\nWhich row do you want to be the new top? ");
+	printf("Which row do you want to be the new top? ");
 	scanf("%d", &topRow);
-	printf("\nWhich row do you want to be the new bottom? ");
+	printf("Which row do you want to be the new bottom? ");
 	scanf("%d", &bottomRow);
 	
-	for(int i = topRow - 1; i <= bottomRow; i++){
-		for(int j = leftCol - 1; j <= rightCol; j++){
+	for(int i = topRow - 1; i <= bottomRow - 1; i++){
+		for(int j = leftCol - 1; j <= rightCol - 1; j++){
 			switch(image[i][j]){
 			case 0 :
 				printf(" ");
@@ -254,19 +258,21 @@ void cropImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 			return ;
 		}
 		
-		for (int i = topRow - 1; i <= bottomRow; i++){
-			for (int k = leftCol - 1; k <= rightCol; k++){
+		for (int i = topRow - 1; i <= bottomRow - 1; i++){
+			for (int k = leftCol - 1; k <= rightCol - 1; k++){
 				fprintf(wptr, "%d", image[i][k]);
 			}
 			fprintf(wptr, "\n"); 
 		}				
 		fclose(wptr);
 		
-		printf("\nImage Successfully Saved!\n\n");
+		printf("\nImage Successfully Saved!\n");
 	}	
+	printf("\n");
 }
 
 void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
+	printf("\n");
 	for(int i=0; i<rows; i++){
 		for(int j=0; j<cols; j++){
 			switch(image[i][j]){
@@ -292,6 +298,8 @@ void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}
 		printf("\n");
 	}
+	printf("\n");
+	
 	char fileName[STRING_CAP], saveFileChoice;
 	printf("Would you like to save the file? (y/n) ");
 	scanf(" %c", &saveFileChoice);
@@ -320,11 +328,13 @@ void dimImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}		
 		fclose(wptr);
 		
-		printf("\nImage Successfully Saved!\n\n");
+		printf("\nImage Successfully Saved!\n");
 	}
+	printf("\n");
 }
 
 void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
+	printf("\n");
 	for(int i=0; i<rows; i++){
 		for(int j=0; j<cols; j++){
 			switch(image[i][j]){
@@ -350,6 +360,8 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}
 		printf("\n");
 	}
+	printf("\n");
+	
 	char fileName[STRING_CAP], saveFileChoice;
 	printf("Would you like to save the file? (y/n) ");
 	scanf(" %c", &saveFileChoice);
@@ -378,7 +390,113 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 		}				
 		fclose(wptr);
 		
-		printf("\nImage Successfully Saved!\n\n");
+		printf("\nImage Successfully Saved!\n");
 	}	
+	printf("\n");
+}
+
+void rotateImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
+	char rotateImageChoice;
+	printf("\nWhich way would you like to rotate your image? (r for clockwise and l for counter-clockwise) ");
+	scanf(" %c", &rotateImageChoice);
+	
+	if(rotateImageChoice == 'r'){
+		printf("\n");
+		for (int i = cols-1; i >= 0; i--){
+			for (int k = rows-1; k >= 0; k--){
+				switch(image[k][i]){
+				case 0 :
+					printf(" ");
+					break;
+				case 1 :
+					printf(".");
+					break;
+				case 2 :
+					printf("o");
+					break;
+				case 3 :
+					printf("O");
+					break;
+				case 4 :
+					printf("0");
+					break;
+				default:
+					printf(" ");
+					break;
+				}
+			}
+			printf("\n");
+		}
+		printf("\n");
+	}
+	else if(rotateImageChoice == 'l'){
+		printf("\n");
+		for (int i = 0; i < cols; i++){
+			for (int k = 0; k < rows; k++){
+				switch(image[k][i]){
+				case 0 :
+					printf(" ");
+					break;
+				case 1 :
+					printf(".");
+					break;
+				case 2 :
+					printf("o");
+					break;
+				case 3 :
+					printf("O");
+					break;
+				case 4 :
+					printf("0");
+					break;
+				default:
+					printf(" ");
+					break;
+				}
+			}
+			printf("\n");
+		}
+		printf("\n");
+	}
+	else{
+		printf("Invalid option, please try again.\n");
+	}
+	
+	char fileName[STRING_CAP], saveFileChoice;
+	printf("Would you like to save the file? (y/n) ");
+	scanf(" %c", &saveFileChoice);
+	if (saveFileChoice == 'y'){
+		printf("What do you want to name the image file? (include the extension) ");
+		scanf(" %s", fileName);
+		
+		FILE* wptr;
+		wptr = fopen(fileName, "w");
+		
+		if (wptr == NULL){
+			printf("Can't open file\n");
+			return ;
+		}
+		
+		if(rotateImageChoice == 'r'){
+			for (int i = cols-1; i >= 0; i--){
+				for (int k = rows-1; k >= 0; k--){			
+					fprintf(wptr, "%d", image[k][i]);				
+				}
+				fprintf(wptr, "\n"); 
+			}
+		}
+		else if(rotateImageChoice == 'l'){
+			for (int i = 0; i < cols; i++){
+				for (int k = 0; k < rows; k++){			
+					fprintf(wptr, "%d", image[k][i]);				
+				}
+				fprintf(wptr, "\n"); 
+			}
+		}			
+		fclose(wptr);
+		
+		printf("\nImage Successfully Saved!\n");
+	}
+	printf("\n");
 }
 
