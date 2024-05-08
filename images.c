@@ -396,7 +396,8 @@ void brightenImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 }
 
 void rotateImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
-	char rotateImageChoice;
+	char rotateImageChoice, fileName[STRING_CAP], saveFileChoice;
+	
 	printf("\nWhich way would you like to rotate your image? (r for clockwise and l for counter-clockwise) ");
 	scanf(" %c", &rotateImageChoice);
 	
@@ -428,6 +429,32 @@ void rotateImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 			printf("\n");
 		}
 		printf("\n");
+		
+		printf("Would you like to save the file? (y/n) ");
+		scanf(" %c", &saveFileChoice);
+		if (saveFileChoice == 'y'){
+			printf("What do you want to name the image file? (include the extension) ");
+			scanf(" %s", fileName);
+		
+			FILE* wptr;
+			wptr = fopen(fileName, "w");
+		
+			if (wptr == NULL){
+				printf("Can't open file\n");
+				return ;
+			}
+			
+			for (int i = cols-1; i >= 0; i--){
+				for (int k = rows-1; k >= 0; k--){			
+					fprintf(wptr, "%d", image[k][i]);				
+				}
+				fprintf(wptr, "\n"); 
+			}			
+			fclose(wptr);
+		
+			printf("\nImage Successfully Saved!\n");
+		}
+		printf("\n");
 	}
 	else if(rotateImageChoice == 'l'){
 		printf("\n");
@@ -457,46 +484,35 @@ void rotateImage(int rows, int cols, int image[MAX_ROWS][MAX_COLUMNS]){
 			printf("\n");
 		}
 		printf("\n");
-	}
-	else{
-		printf("Invalid option, please try again.\n");
-	}
-	
-	char fileName[STRING_CAP], saveFileChoice;
-	printf("Would you like to save the file? (y/n) ");
-	scanf(" %c", &saveFileChoice);
-	if (saveFileChoice == 'y'){
-		printf("What do you want to name the image file? (include the extension) ");
-		scanf(" %s", fileName);
 		
-		FILE* wptr;
-		wptr = fopen(fileName, "w");
+		printf("Would you like to save the file? (y/n) ");
+		scanf(" %c", &saveFileChoice);
+		if (saveFileChoice == 'y'){
+			printf("What do you want to name the image file? (include the extension) ");
+			scanf(" %s", fileName);
 		
-		if (wptr == NULL){
-			printf("Can't open file\n");
-			return ;
-		}
+			FILE* wptr;
+			wptr = fopen(fileName, "w");
 		
-		if(rotateImageChoice == 'r'){
-			for (int i = cols-1; i >= 0; i--){
-				for (int k = rows-1; k >= 0; k--){			
-					fprintf(wptr, "%d", image[k][i]);				
-				}
-				fprintf(wptr, "\n"); 
+			if (wptr == NULL){
+				printf("Can't open file\n");
+				return ;
 			}
-		}
-		else if(rotateImageChoice == 'l'){
+			
 			for (int i = 0; i < cols; i++){
 				for (int k = 0; k < rows; k++){			
 					fprintf(wptr, "%d", image[k][i]);				
 				}
 				fprintf(wptr, "\n"); 
-			}
-		}			
-		fclose(wptr);
+			}			
+			fclose(wptr);
 		
-		printf("\nImage Successfully Saved!\n");
+			printf("\nImage Successfully Saved!\n");
+		}
+		printf("\n");
 	}
-	printf("\n");
+	else{
+		printf("\nInvalid option, please try again.\n\n");
+	}
 }
 
